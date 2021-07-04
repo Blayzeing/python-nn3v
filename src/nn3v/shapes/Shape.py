@@ -9,6 +9,10 @@ These properties can be choosen to be used or ignored by subclasses, with the
 methods here acting more as a supporting framework and set of utilities to all
 shape implementations.
 """
+
+import numpy as np
+from traits.api import HasTraits, Array
+
 # TODO:
 # Some abstract class here for generic objects; contains general properties:
 #   -colour
@@ -16,6 +20,13 @@ shape implementations.
 #   -mode (wire, points, solid)
 #   -shading (smooth, solid)
 
-class Shape
-  def __init__(self, points):
+class Shape(HasTraits):
+  #transform = Property(Array(shape=(4,4),value=np.eye(4)), depends_on=['position','rotation'])
+  transform = Array(shape=(4,4),value=np.eye(4))
+  position = Property(Array(shape=(3,)), depends_on='transform')
+  rotation = Property(Array(shape=(3,)), depends_on='transform')
+  scale = Property(Float, depends_on='transform')
+
+  def _get_position(self):
+    # 
   
